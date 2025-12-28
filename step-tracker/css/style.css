@@ -1,0 +1,252 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* Progress Ring */
+.progress-ring {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.progress-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.progress-container svg {
+    transform: rotate(-90deg);
+}
+
+.progress-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 12;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: url(#gradient);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.step-count {
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.step-label {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4ade80;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Unlock Code */
+.unlock-code {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    color: #000;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.unlock-code h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    opacity: 0.8;
+}
+
+.unlock-code .code {
+    font-size: 32px;
+    font-family: monospace;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.unlock-code .expires {
+    font-size: 12px;
+    margin-top: 8px;
+    opacity: 0.7;
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    margin-top: 10px;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.copy-btn {
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    color: inherit;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Status */
+.status {
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.status.tracking {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+}
+
+.status.error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.status.success {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+}
+
+/* Manual Input */
+.manual-input {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.manual-input label {
+    display: block;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.manual-input input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.manual-input input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* Instructions */
+.instructions {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+}
+
+.instructions ol {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+.hidden {
+    display: none;
+}

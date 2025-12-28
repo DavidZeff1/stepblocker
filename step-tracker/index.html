@@ -1,455 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Step Challenge</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        min-height: 100vh;
-        color: white;
-        padding: 20px;
-      }
-      .container {
-        max-width: 400px;
-        margin: 0 auto;
-      }
-      h1 {
-        text-align: center;
-        margin-bottom: 8px;
-        font-size: 24px;
-      }
-      .subtitle {
-        text-align: center;
-        color: #888;
-        margin-bottom: 30px;
-        font-size: 14px;
-      }
-      .card {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 20px;
-        backdrop-filter: blur(10px);
-      }
-      .progress-ring {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-      .progress-container {
-        position: relative;
-        width: 200px;
-        height: 200px;
-      }
-      .progress-container svg {
-        transform: rotate(-90deg);
-      }
-      .progress-bg {
-        fill: none;
-        stroke: rgba(255, 255, 255, 0.1);
-        stroke-width: 12;
-      }
-      .progress-bar {
-        fill: none;
-        stroke: url(#gradient);
-        stroke-width: 12;
-        stroke-linecap: round;
-        transition: stroke-dashoffset 0.5s ease;
-      }
-      .progress-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
-      .step-count {
-        font-size: 42px;
-        font-weight: bold;
-      }
-      .step-label {
-        color: #888;
-        font-size: 14px;
-      }
-      .stats {
-        display: flex;
-        justify-content: space-around;
-        text-align: center;
-      }
-      .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: #4ade80;
-      }
-      .stat-label {
-        font-size: 12px;
-        color: #888;
-      }
-      .unlock-code {
-        background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-        color: #000;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        margin-top: 20px;
-      }
-      .unlock-code h3 {
-        font-size: 14px;
-        margin-bottom: 8px;
-        opacity: 0.8;
-      }
-      .unlock-code .code {
-        font-size: 32px;
-        font-family: monospace;
-        font-weight: bold;
-        letter-spacing: 4px;
-      }
-      .unlock-code .expires {
-        font-size: 12px;
-        margin-top: 8px;
-        opacity: 0.7;
-      }
-      .btn {
-        width: 100%;
-        padding: 16px;
-        border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.1s, opacity 0.2s;
-      }
-      .btn:active {
-        transform: scale(0.98);
-      }
-      .btn-primary {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        color: white;
-      }
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        margin-top: 10px;
-      }
-      .btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      .status {
-        text-align: center;
-        padding: 12px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        font-size: 14px;
-      }
-      .status.tracking {
-        background: rgba(59, 130, 246, 0.2);
-        color: #60a5fa;
-      }
-      .status.error {
-        background: rgba(239, 68, 68, 0.2);
-        color: #f87171;
-      }
-      .status.success {
-        background: rgba(74, 222, 128, 0.2);
-        color: #4ade80;
-      }
-      .manual-input {
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .manual-input label {
-        display: block;
-        font-size: 14px;
-        color: #888;
-        margin-bottom: 8px;
-      }
-      .manual-input input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-        font-size: 16px;
-        margin-bottom: 10px;
-      }
-      .manual-input input:focus {
-        outline: none;
-        border-color: #3b82f6;
-      }
-      .instructions {
-        font-size: 13px;
-        color: #888;
-        line-height: 1.5;
-      }
-      .instructions ol {
-        margin-left: 20px;
-        margin-top: 10px;
-      }
-      .instructions li {
-        margin-bottom: 8px;
-      }
-      .copy-btn {
-        background: rgba(0, 0, 0, 0.2);
-        border: none;
-        color: inherit;
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-size: 12px;
-        cursor: pointer;
-        margin-top: 10px;
-      }
-      .hidden {
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
     <div class="container">
-      <h1>🚶 Step Challenge</h1>
-      <p class="subtitle">Walk 2,000 steps to unlock</p>
-      <div class="card">
-        <div class="progress-ring">
-          <div class="progress-container">
-            <svg width="200" height="200">
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#4ade80" />
-                  <stop offset="100%" stop-color="#22c55e" />
-                </linearGradient>
-              </defs>
-              <circle class="progress-bg" cx="100" cy="100" r="88" />
-              <circle
-                class="progress-bar"
-                cx="100"
-                cy="100"
-                r="88"
-                stroke-dasharray="553"
-                id="progressCircle"
-              />
-            </svg>
-            <div class="progress-text">
-              <div class="step-count" id="stepCount">0</div>
-              <div class="step-label">steps</div>
+        <h1>🚶 Step Challenge</h1>
+        <p class="subtitle">Walk 2,000 steps to unlock</p>
+        
+        <div class="card">
+            <div class="progress-ring">
+                <div class="progress-container">
+                    <svg width="200" height="200">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#4ade80"/>
+                                <stop offset="100%" stop-color="#22c55e"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="progress-bg" cx="100" cy="100" r="88"/>
+                        <circle class="progress-bar" cx="100" cy="100" r="88" stroke-dasharray="553" id="progressCircle"/>
+                    </svg>
+                    <div class="progress-text">
+                        <div class="step-count" id="stepCount">0</div>
+                        <div class="step-label">steps</div>
+                    </div>
+                </div>
             </div>
-          </div>
+            
+            <div class="stats">
+                <div>
+                    <div class="stat-value" id="remaining">2,000</div>
+                    <div class="stat-label">remaining</div>
+                </div>
+                <div>
+                    <div class="stat-value" id="progress">0%</div>
+                    <div class="stat-label">complete</div>
+                </div>
+            </div>
+            
+            <div id="unlockSection" class="hidden">
+                <div class="unlock-code">
+                    <h3>�� CHALLENGE COMPLETE!</h3>
+                    <div class="code" id="unlockCode">------</div>
+                    <div class="expires" id="expiresIn">Valid for 60 minutes</div>
+                    <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+                </div>
+            </div>
         </div>
-        <div class="stats">
-          <div>
-            <div class="stat-value" id="remaining">2,000</div>
-            <div class="stat-label">remaining</div>
-          </div>
-          <div>
-            <div class="stat-value" id="progress">0%</div>
-            <div class="stat-label">complete</div>
-          </div>
+        
+        <div id="statusBox" class="status hidden"></div>
+        
+        <div class="card">
+            <button class="btn btn-primary" id="startBtn" onclick="startTracking()">Start Step Tracking</button>
+            <button class="btn btn-secondary hidden" id="stopBtn" onclick="stopTracking()">Stop Tracking</button>
+            
+            <div class="manual-input">
+                <label>Or enter steps manually from your Health app:</label>
+                <input type="number" id="manualSteps" placeholder="e.g., 2500" inputmode="numeric">
+                <button class="btn btn-secondary" onclick="setManualSteps()">Update Steps</button>
+            </div>
         </div>
-        <div id="unlockSection" class="hidden">
-          <div class="unlock-code">
-            <h3>🎉 CHALLENGE COMPLETE!</h3>
-            <div class="code" id="unlockCode">------</div>
-            <div class="expires" id="expiresIn">Valid for 60 minutes</div>
-            <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
-          </div>
+        
+        <div class="card instructions">
+            <strong>How it works:</strong>
+            <ol>
+                <li>Start tracking and walk with your phone</li>
+                <li>Or enter steps manually from Health app</li>
+                <li>Get unlock code at 2,000 steps</li>
+                <li>Enter code in StepBlocker on Mac</li>
+            </ol>
         </div>
-      </div>
-      <div id="statusBox" class="status hidden"></div>
-      <div class="card">
-        <button class="btn btn-primary" id="startBtn" onclick="startTracking()">
-          Start Step Tracking
-        </button>
-        <button
-          class="btn btn-secondary hidden"
-          id="stopBtn"
-          onclick="stopTracking()"
-        >
-          Stop Tracking
-        </button>
-        <div class="manual-input">
-          <label>Or enter steps manually from your Health app:</label
-          ><input
-            type="number"
-            id="manualSteps"
-            placeholder="e.g., 2500"
-            inputmode="numeric"
-          /><button class="btn btn-secondary" onclick="setManualSteps()">
-            Update Steps
-          </button>
-        </div>
-      </div>
-      <div class="card instructions">
-        <strong>How it works:</strong>
-        <ol>
-          <li>Start tracking and walk with your phone</li>
-          <li>Or enter steps manually from Health app</li>
-          <li>Get unlock code at 2,000 steps</li>
-          <li>Enter code in StepBlocker on Mac</li>
-        </ol>
-      </div>
     </div>
-    <script>
-      const TARGET_STEPS = 2000,
-        SECRET = "hostblocker2024";
-      let steps = 0,
-        isTracking = false,
-        lastAccel = { x: 0, y: 0, z: 0 },
-        stepThreshold = 12,
-        lastStepTime = 0,
-        challengeStartTime = null;
-      function loadState() {
-        const saved = localStorage.getItem("stepChallenge");
-        if (saved) {
-          const state = JSON.parse(saved);
-          if (Date.now() - state.startTime > 24 * 60 * 60 * 1000) {
-            localStorage.removeItem("stepChallenge");
-            return;
-          }
-          steps = state.steps || 0;
-          challengeStartTime = state.startTime;
-          updateUI();
-        }
-      }
-      function saveState() {
-        localStorage.setItem(
-          "stepChallenge",
-          JSON.stringify({
-            steps: steps,
-            startTime: challengeStartTime || Date.now(),
-          })
-        );
-      }
-      function updateUI() {
-        const percent = Math.min(100, (steps / TARGET_STEPS) * 100),
-          remaining = Math.max(0, TARGET_STEPS - steps);
-        document.getElementById("stepCount").textContent =
-          steps.toLocaleString();
-        document.getElementById("remaining").textContent =
-          remaining.toLocaleString();
-        document.getElementById("progress").textContent =
-          Math.round(percent) + "%";
-        document.getElementById("progressCircle").style.strokeDashoffset =
-          553 - (percent / 100) * 553;
-        if (steps >= TARGET_STEPS) {
-          document.getElementById("unlockSection").classList.remove("hidden");
-          generateUnlockCode();
-        } else {
-          document.getElementById("unlockSection").classList.add("hidden");
-        }
-      }
-      function generateUnlockCode() {
-        const now = new Date(),
-          hourBlock = Math.floor(now.getTime() / 3600000),
-          dateStr = now.toISOString().split("T")[0],
-          input = `${SECRET}-${dateStr}-${hourBlock}`;
-        let hash = 0;
-        for (let i = 0; i < input.length; i++) {
-          hash = (hash << 5) - hash + input.charCodeAt(i);
-          hash = hash & hash;
-        }
-        document.getElementById("unlockCode").textContent = Math.abs(
-          hash % 1000000
-        )
-          .toString()
-          .padStart(6, "0");
-        document.getElementById(
-          "expiresIn"
-        ).textContent = `Valid for ${Math.ceil(
-          ((hourBlock + 1) * 3600000 - now.getTime()) / 60000
-        )} minutes`;
-      }
-      function copyCode() {
-        navigator.clipboard
-          .writeText(document.getElementById("unlockCode").textContent)
-          .then(() => showStatus("Code copied!", "success"));
-      }
-      function showStatus(message, type) {
-        const box = document.getElementById("statusBox");
-        box.textContent = message;
-        box.className = `status ${type}`;
-        box.classList.remove("hidden");
-        if (type !== "tracking")
-          setTimeout(() => box.classList.add("hidden"), 3000);
-      }
-      function startTracking() {
-        if (!window.DeviceMotionEvent) {
-          showStatus("Motion not supported. Enter steps manually.", "error");
-          return;
-        }
-        if (typeof DeviceMotionEvent.requestPermission === "function") {
-          DeviceMotionEvent.requestPermission()
-            .then((r) => {
-              if (r === "granted") enableTracking();
-              else
-                showStatus("Permission denied. Enter steps manually.", "error");
-            })
-            .catch(() => showStatus("Could not request permission.", "error"));
-        } else enableTracking();
-      }
-      function enableTracking() {
-        isTracking = true;
-        challengeStartTime = challengeStartTime || Date.now();
-        window.addEventListener("devicemotion", handleMotion);
-        document.getElementById("startBtn").classList.add("hidden");
-        document.getElementById("stopBtn").classList.remove("hidden");
-        showStatus("📍 Tracking... Walk with your phone!", "tracking");
-      }
-      function stopTracking() {
-        isTracking = false;
-        window.removeEventListener("devicemotion", handleMotion);
-        document.getElementById("startBtn").classList.remove("hidden");
-        document.getElementById("stopBtn").classList.add("hidden");
-        document.getElementById("statusBox").classList.add("hidden");
-        saveState();
-      }
-      function handleMotion(e) {
-        const a = e.accelerationIncludingGravity;
-        if (!a || a.x === null) return;
-        const now = Date.now(),
-          mag = Math.sqrt(
-            Math.pow(Math.abs(a.x - lastAccel.x), 2) +
-              Math.pow(Math.abs(a.y - lastAccel.y), 2) +
-              Math.pow(Math.abs(a.z - lastAccel.z), 2)
-          );
-        if (mag > stepThreshold && now - lastStepTime > 300) {
-          steps++;
-          lastStepTime = now;
-          updateUI();
-          saveState();
-        }
-        lastAccel = { x: a.x, y: a.y, z: a.z };
-      }
-      function setManualSteps() {
-        const v = parseInt(document.getElementById("manualSteps").value, 10);
-        if (isNaN(v) || v < 0) {
-          showStatus("Enter a valid number", "error");
-          return;
-        }
-        steps = v;
-        challengeStartTime = challengeStartTime || Date.now();
-        updateUI();
-        saveState();
-        document.getElementById("manualSteps").value = "";
-        showStatus("Steps updated!", "success");
-      }
-      loadState();
-      updateUI();
-      setInterval(() => {
-        if (steps >= TARGET_STEPS) generateUnlockCode();
-      }, 60000);
-    </script>
-  </body>
+
+    <script src="js/config.js"></script>
+    <script src="js/unlock.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/steps.js"></script>
+</body>
 </html>
