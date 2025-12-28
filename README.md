@@ -8,6 +8,7 @@ A website blocker for Mac that requires you to walk 2,000 steps before you can u
 ## Quick Start
 
 ### 1. Download
+
 ```bash
 git clone https://github.com/DavidZeff1/stepblocker.git
 cd stepblocker
@@ -16,6 +17,7 @@ cd stepblocker
 Or click the green "Code" button above → "Download ZIP"
 
 ### 2. Run
+
 ```bash
 python3 stepblocker.py
 ```
@@ -36,6 +38,7 @@ That's it. No installation needed.
 - Python 3 (comes pre-installed on Mac)
 
 ## Files
+
 ```
 stepblocker/
 ├── stepblocker.py      ← Run this on your Mac
